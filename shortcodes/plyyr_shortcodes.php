@@ -81,7 +81,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
 
         $style = !$style ? "width: 795px; height: 2000px; float: left;" : $style;
 
-        $hook = '<div gcn-src="http://plyyr.com?portal=' . $portal . '" class="gcntargets" style="' . $style . '" '
+        $hook = '<div class="gcntargets" style="' . $style . '" '
                 . 'gcn-portal="' . $portal . '"></div>'
                 . '<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://s3.amazonaws.com/gcn-static-assets/jsmodules/plyyr_embedder.js"; fjs.parentNode.insertBefore(js, fjs);}(document, "script", "gameplayer-gcn"));</script>';
 
