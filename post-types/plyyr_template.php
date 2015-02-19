@@ -110,7 +110,7 @@ if (!class_exists('Plyyr_Template')) {
 
       $args = array(
           //'post_author'    => $restaurant_owner_id,
-          'post_content' => '<h2>' . $content['description'] . '</h2><br><code>[gcn portal="' . $content['portal'] . '" quiz="' . $content['id'] . '"]</code>',
+          'post_content' => '<h2>' . $content['description'] . '</h2><br><code>' . $content['wp_shortcode'] . '</code>',
           'post_name' => $content['slug'],
           'post_status' => 'publish',
           'post_title' => $title,

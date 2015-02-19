@@ -22,32 +22,36 @@ if (!class_exists('Plyyr_Shortcodes')) {
           'quiz' => '',
           'portal' => '',
                       ), $atts));
-
-
-      if (!$quiz) {
-
-        $error = "
+      $error = "
 		<div style='border: 20px solid red; border-radius: 40px; padding: 40px; margin: 50px 0 70px;'>
 			<h3>Ooops!</h3>
-			<p style='margin: 0;'>Something is wrong with your Gcn shortcode. You need to specify a quiz id and a portal code.</p>
+			<p style='margin: 0;'>Something is wrong with your Gcn shortcode. You need to specify a quiz id and a portal code ({BRANCH}).</p>
 		</div>";
 
-        return $error;
+      if (!$quiz) {
+        return str_replace('{BRANCH}', '1', $error);
       } else {
         //Do we have a portal code?
         if (!$portal) {
           $portal = get_option('plyyr_setting_portal', 'plyyr');
         }
 
-        $parts = explode('_', $quiz);
-        $widget = count($parts) ? $parts[0] : 'trivia';
+        $response = file_get_contents("https://games.gamecloudnetwork.com/game/basic/$quiz?portal=$portal&plugin=wordpress");
+        if ($response) {
+          $content = json_decode($response, true);
+        }
 
-        $hook = '<div class="gcntargets" style="width:654px;height:368px" '
-                . 'gcn-portal="' . $portal . '"  gcn-widget="' . $widget . '" gcn-format="full" gcn-resize="1" '
-                . 'gcn-level="' . $quiz . '"></div>'
-                . '<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://s3.amazonaws.com/gcn-static-assets/jsmodules/embedder.js"; fjs.parentNode.insertBefore(js, fjs);}(document, "script", "gameplayer-gcn"));</script>';
+        if ($content) {
+          if (isset($content['type']) && $content['type'] == 'error') {
+            return str_replace('{BRANCH}', '2', $error);
+          }
+        } else {
+          return str_replace('{BRANCH}', '3', $error);
+        }
 
-        return "$hook";
+        $hook = $content["embed_code"];
+
+        return $hook;
       }
     }
 
