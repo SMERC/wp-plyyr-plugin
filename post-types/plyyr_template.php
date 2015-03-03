@@ -29,6 +29,15 @@ if (!class_exists('Plyyr_Template')) {
       // Initialize Post Type
       $this->create_post_type();
     }
+    
+    public function getPortalCode()
+    {
+      $portal = trim(get_option('plyyr_setting_portal',  'plyyr'));
+      if (!$portal) {
+        $portal = 'plyyr';
+      }
+      return $portal;
+    }
 
     /**
      * Create the post type
@@ -82,9 +91,10 @@ if (!class_exists('Plyyr_Template')) {
       $code = urlencode(trim(trim($code), '/'));
 
       //Now, extract the portal code from the host
-      $portal = get_option('plyyr_setting_portal', 'plyyr');
+      $portal = $this->getPortalCode();
 
       $response = file_get_contents("https://games.gamecloudnetwork.com/game/decode/$code?portal=$portal&plugin=wordpress");
+
       if ($response) {
         $content = json_decode($response, true);
       }
@@ -103,10 +113,7 @@ if (!class_exists('Plyyr_Template')) {
       }
       
       //Do we have the word quiz on the title?
-      $title = $content['title'];
-      if (!substr_count(strtolower($title), 'quiz')) {
-        $title = 'Quiz: ' . $title;
-      }
+      $title = $content['title_with_gametype'];
 
       $args = array(
           //'post_author'    => $restaurant_owner_id,
