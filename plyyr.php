@@ -75,7 +75,6 @@ if (!class_exists('Plyyr')) {
       array_unshift($links, $settings_link);
       return $links;
     }
-
   }
 
 }

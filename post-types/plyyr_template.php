@@ -42,6 +42,10 @@ if (!class_exists('Plyyr_Template')) {
           ),
           'rewrite' => false,
           'public' => true,
+          'publicly_queryable' => true,
+          'show_in_menu' => true,
+          'show_in_nav_menus' => true,
+          'exclude_from_search' => false,
           'has_archive' => true,
           'description' => __("Embed quizzes on your own posts as seen on plyyr.com"),
           'supports' => array(
@@ -49,7 +53,7 @@ if (!class_exists('Plyyr_Template')) {
           ),
               )
       );
-      register_taxonomy(self::POST_TYPE, self::POST_TYPE);
+      register_taxonomy(self::POST_TYPE, self::POST_TYPE, array('rewrite' => false));
       flush_rewrite_rules();
     }
 
@@ -62,15 +66,34 @@ if (!class_exists('Plyyr_Template')) {
       if (!is_404()) {
         return;
       }
-
+      
       //Is query string present?
       if (isset($_REQUEST['plyyr'])) {
-        $id = $this->create_new_post($_REQUEST['plyyr']);
+        $term = trim($_REQUEST['plyyr']);
+        if ($this->term_has_id_format($term)) {
+          $id = $this->create_new_post($term);
+        } elseif ($this->term_has_tag_format($term)) {
+          $this->get_term_posts_list($term);
+        }     
       }
 
       if ($id) {
         header('Location: ' . get_permalink($id));
       }
+    }
+    
+    protected function term_has_id_format($term)
+    {
+      if ($term) {
+        $parts = explode('-', $term);
+        //The second part looks like an id
+        return count($parts) > 2 && preg_match('/[0-9]+[a-zA-Z]+|[a-zA-Z]+[0-9]+/', $parts[1]);
+      }
+    }
+    
+    protected function term_has_tag_format($term)
+    {
+      return $term != '';
     }
 
     /**
@@ -84,7 +107,7 @@ if (!class_exists('Plyyr_Template')) {
       //Now, extract the portal code from the host
       $portal = get_option('plyyr_setting_portal', 'plyyr');
 
-      $response = file_get_contents("https://games.gamecloudnetwork.com/game/decode/$code?portal=$portal&plugin=wordpress");
+      $response = file_get_contents("https://games.gamecloudnetwork.com/game/decode/$code?portal=$portal&plugin=wordpress&iw=360");
       if ($response) {
         $content = json_decode($response, true);
       }
@@ -109,7 +132,6 @@ if (!class_exists('Plyyr_Template')) {
       }
 
       $args = array(
-          //'post_author'    => $restaurant_owner_id,
           'post_content' => '<h2>' . $content['description'] . '</h2><br><code>' . $content['wp_shortcode'] . '</code>',
           'post_name' => $content['slug'],
           'post_status' => 'publish',
@@ -118,8 +140,81 @@ if (!class_exists('Plyyr_Template')) {
           'post_excerpt' => $content['description'],
       );
 
-      return wp_insert_post($args);
+      $id = wp_insert_post($args);
+      //Store image
+      add_post_meta($id, 'plyyr_image', $content['picture']);
+      add_post_meta($id, 'plyyr_description', $content['description']);
+      $tags = $this->register_tags($id, $content['tags']);
+      $tags_html = get_the_term_list($id, self::POST_TYPE, 'More games that contain: ', ', ');
+      //$terms = wp_get_post_terms($id, self::POST_TYPE);
+      //var_export($tags_html);exit;
+      $args['post_content'] = $args['post_content'] . $tags_html;
+      $args['ID'] = $id;
+      wp_update_post($args);
+      
+      return $id;
     }
+    
+    /**
+     * Register the post tags as plyyr taxonomies
+     * @param type $tagstring
+     */
+    protected function register_tags($object_id, $tagstring)
+    {
+      $tags = explode(',', $tagstring);
+      $cleaned_tags = array();
+      foreach ($tags as $tag) {
+        $tag = trim(strtolower($tag));
+        if ($tag) {
+          $cleaned_tags[] = ucwords($tag);
+        }
+      }
+      wp_set_object_terms($object_id, $cleaned_tags, self::POST_TYPE);
+      return $cleaned_tags;
+    }
+    
+    /** 
+     * Prints a list of posts
+     */
+    protected function get_term_posts_list($term)
+    {
+      if ($theme_file = locate_template(array('plyyr-by-tag.php'))) {
+          $template_path = $theme_file;
+      } else {
+          $official_theme_file = locate_template(array('page.php'));
+          $template_path = plugin_dir_path( __FILE__ ) . '../templates/plyyr-by-tag.php';
+          $theme = file_get_contents($official_theme_file);
+          $toks = token_get_all($theme);
+          $result = array();
+          $start_article_index = null;
+          $end_article_index = 0;
+          foreach ($toks as $tok) {
+            if( $tok[0] == T_INLINE_HTML )   {
+              $result[] = $tok[1];
+              if (substr_count($tok[1], '<article') && $start_article_index === null) {
+                $start_article_index = count($result);
+              }
+              if (substr_count($tok[1], '</article')) {
+                $last_article_index = count($result);
+              }
+            }
+          }
+          $_wrapper_start = implode('', array_slice($result, 0, $start_article_index - 1));
+          
+          $_wrapper_end =  implode('', array_slice($result, $last_article_index));
+      }
+
+      $myposts = array('post_type' => 'plyyr', 'tax_query' => array(
+        array(
+            'taxonomy' => 'plyyr',
+            'field' => 'slug',
+            'terms' => $term
+        )
+      ));
+      $loop = new WP_Query($myposts);
+      include_once $template_path;
+      exit;
+    }              
 
   }
 

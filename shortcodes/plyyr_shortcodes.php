@@ -63,24 +63,16 @@ if (!class_exists('Plyyr_Shortcodes')) {
     public function create_plyyr_embed_code($atts, $content = null)
     {
       extract(shortcode_atts(array(
-          'portal' => '',
           'style' => ''
                       ), $atts));
 
       //Do we have a portal code?
-      if (!$portal) {
-        $portal = get_option('plyyr_setting_portal',  'plyyr');
-      }
-
+      $portal = get_option('plyyr_setting_portal',  'plyyr');
+      
       if (!$portal) {
 
-        $error = "
-		<div style='border: 20px solid red; border-radius: 40px; padding: 40px; margin: 50px 0 70px;'>
-			<h3>Ooops!</h3>
-			<p style='margin: 0;'>Something is wrong with your Plyyr shortcode. You need to specify a portal code.</p>
-		</div>";
+        $portal = 'plyyr';
 
-        return $error;
       } else {
 
         $style = !$style ? "width: 795px; height: 2000px; float: left;" : $style;
