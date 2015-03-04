@@ -137,9 +137,8 @@ if (!class_exists('Plyyr_Template')) {
         return false;
       }
 
-      $powered_link = '<a target="_blank" href="' . $content['plyyr_link'] . '">Powered by Plyyr.com</a><br>';
       $args = array(
-          'post_content' => '<h2>' . $content['description'] . '</h2><br><code>' . $content['wp_shortcode'] . '</code><br>' . $powered_link,
+          'post_content' => '<h2>' . $content['description'] . '</h2><br><code>' . $content['wp_shortcode'] . '</code>',
           'post_name' => $content['slug'],
           'post_status' => 'publish',
           'post_title' => $title,

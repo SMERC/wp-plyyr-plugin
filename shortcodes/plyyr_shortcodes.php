@@ -56,7 +56,8 @@ if (!class_exists('Plyyr_Shortcodes')) {
           return str_replace('{BRANCH}', '3', $error);
         }
 
-        $hook = $content["embed_code"];
+        $powered_link = '<a target="_blank" href="' . $content['plyyr_link'] . '">Powered by Plyyr.com</a><br>';
+        $hook = $content["embed_code"] . $powered_link;
 
         return $hook;
       }
@@ -88,6 +89,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
                 . 'gcn-portal="' . $portal . '"></div>'
                 . '<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://s3.amazonaws.com/gcn-static-assets/jsmodules/plyyr_embedder.js"; fjs.parentNode.insertBefore(js, fjs);}(document, "script", "gameplayer-gcn"));</script>';
 
+        $hook .= '<a target="_blank" href="http://plyyr.com">Powered by Plyyr.com</a>';
         return "$hook";
       }
     }
