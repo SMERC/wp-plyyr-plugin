@@ -11,6 +11,15 @@ if (!class_exists('Plyyr_Shortcodes')) {
       add_shortcode('gcn', array(&$this, 'create_gcn_embed_code'));
       add_shortcode('plyyr', array(&$this, 'create_plyyr_embed_code'));
     }
+    
+    public function getPortalCode()
+    {
+      $portal = trim(get_option('plyyr_setting_portal',  'plyyr'));
+      if (!$portal) {
+        $portal = 'plyyr';
+      }
+      return $portal;
+    }
 
     /**
      * Allows to embed gcn script code in wordpress friendly format.
@@ -32,9 +41,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
         return str_replace('{BRANCH}', '1', $error);
       } else {
         //Do we have a portal code?
-        if (!$portal) {
-          $portal = get_option('plyyr_setting_portal', 'plyyr');
-        }
+        $portal = $this->getPortalCode();
 
         $response = file_get_contents("https://games.gamecloudnetwork.com/game/basic/$quiz?portal=$portal&plugin=wordpress");
         if ($response) {
@@ -67,8 +74,8 @@ if (!class_exists('Plyyr_Shortcodes')) {
                       ), $atts));
 
       //Do we have a portal code?
-      $portal = get_option('plyyr_setting_portal',  'plyyr');
-      
+      $portal = $this->getPortalCode();
+
       if (!$portal) {
 
         $portal = 'plyyr';

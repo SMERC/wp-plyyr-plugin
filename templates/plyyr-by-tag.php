@@ -30,6 +30,7 @@ get_header(); ?>
         <?php endwhile ?>
         <br><br>    
         <a target="_blank" href="http://plyyr.com">Powered by Plyyr.com</a>    
+        <br>
       <?php echo $_wrapper_end ?>
         
 <?php wp_reset_query(); ?>

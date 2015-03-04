@@ -29,6 +29,15 @@ if (!class_exists('Plyyr_Template')) {
       // Initialize Post Type
       $this->create_post_type();
     }
+    
+    public function getPortalCode()
+    {
+      $portal = trim(get_option('plyyr_setting_portal',  'plyyr'));
+      if (!$portal) {
+        $portal = 'plyyr';
+      }
+      return $portal;
+    }
 
     /**
      * Create the post type
@@ -105,7 +114,7 @@ if (!class_exists('Plyyr_Template')) {
       $code = urlencode(trim(trim($code), '/'));
 
       //Now, extract the portal code from the host
-      $portal = get_option('plyyr_setting_portal', 'plyyr');
+      $portal = $this->getPortalCode();
 
       $response = file_get_contents("https://games.gamecloudnetwork.com/game/decode/$code?portal=$portal&plugin=wordpress&iw=360");
       if ($response) {
@@ -120,19 +129,17 @@ if (!class_exists('Plyyr_Template')) {
         return false;
       }
 
+      //Do we have the word quiz on the title?
+      $title = $content['title_with_gametype'];
+      
       //Check that the post doesnt exist
-      if (get_page_by_title($content['title'], OBJECT, 'plyyr')) {
+      if (get_page_by_title($title, OBJECT, 'plyyr')) {
         return false;
       }
-      
-      //Do we have the word quiz on the title?
-      $title = $content['title'];
-      if (!substr_count(strtolower($title), 'quiz')) {
-        $title = 'Quiz: ' . $title;
-      }
 
+      $powered_link = '<a target="_blank" href="' . $content['plyyr_link'] . '">Powered by Plyyr.com</a><br>';
       $args = array(
-          'post_content' => '<h2>' . $content['description'] . '</h2><br><code>' . $content['wp_shortcode'] . '</code>',
+          'post_content' => '<h2>' . $content['description'] . '</h2><br><code>' . $content['wp_shortcode'] . '</code><br>' . $powered_link,
           'post_name' => $content['slug'],
           'post_status' => 'publish',
           'post_title' => $title,
@@ -181,7 +188,7 @@ if (!class_exists('Plyyr_Template')) {
       if ($theme_file = locate_template(array('plyyr-by-tag.php'))) {
           $template_path = $theme_file;
       } else {
-          $official_theme_file = locate_template(array('page.php'));
+          $official_theme_file = locate_template(array('page.php', 'index.php'));
           $template_path = plugin_dir_path( __FILE__ ) . '../templates/plyyr-by-tag.php';
           $theme = file_get_contents($official_theme_file);
           $toks = token_get_all($theme);
