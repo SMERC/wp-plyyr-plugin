@@ -65,7 +65,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
 
     /**
      * Allows to embed the plyyr iframe code in wordpress friendly format.
-     * Usage: <code>[plyyr portal="yourportalcode" style="width: 300px; height: 2000px; float: left"]</code>
+     * Usage: <code>[plyyr style="width: 300px; height: 2000px; float: left"]</code>
      * If you are not sure about the style don't include the parameter.
      */
     public function create_plyyr_embed_code($atts, $content = null)

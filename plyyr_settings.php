@@ -28,7 +28,7 @@ if (!class_exists('Plyyr_Settings')) {
               'plyyr-section', '', array(&$this, 'settings_section_plyyr'), 'plyyr'
       );
     }
-
+    
     public function settings_section_plyyr()
     {
       // add your setting's fields
@@ -46,7 +46,7 @@ if (!class_exists('Plyyr_Settings')) {
     {
       $help = 'Any revenue you generate with your posts is going to be associated to this code. '
               . 'You can get it from <a href="http://plyyr.com/publishers" target="_blank">http://plyyr.com/publishers</a><br>'
-              . 'By registering a portal code you can customize your widgets and get benefits from the plyyr platform.';
+              . 'By registering a portal code you can customize your widgets and get benefits from the plyyr platform. This code is optional.';
       // Get the field name from the $args array
       $field = $args['field'];
       
@@ -65,7 +65,7 @@ if (!class_exists('Plyyr_Settings')) {
     {
       // Add a page to manage this plugin's settings
       add_options_page(
-              'WP Plugin Template Settings', 'WP Plugin Template', 'manage_options', 'plyyr', array(&$this, 'plugin_settings_page')
+              'Plyyr Settings', 'Plyyr', 'manage_options', 'plyyr', array(&$this, 'plugin_settings_page')
       );
     }
 
@@ -77,12 +77,24 @@ if (!class_exists('Plyyr_Settings')) {
       if (!current_user_can('manage_options')) {
         wp_die(__('You do not have sufficient permissions to access this page.'));
       }
+      
+      // Load settings
+      $options = get_option($this->get_option_name());
+
+      // Set default tab
+      $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'start';
+
+      // Check if feedback mail was sent
+      $feedback = isset($_GET['mail']) ? $_GET['mail'] : 'false';
 
       // Render the settings template
-      include(sprintf("%s/templates/settings.php", dirname(__FILE__)));
+      include(sprintf("%s/templates/settings_full.php", dirname(__FILE__)));
     }
-
-// END public function plugin_settings_page()
+    
+    public function get_option_name() {
+		return 'plyyr';
+	}
   }
+  
 
 }
