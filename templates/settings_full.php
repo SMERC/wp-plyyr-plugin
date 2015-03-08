@@ -2,7 +2,8 @@
 <div class="wrap" id="plyyr-admin">
     <h1><?php _e('Plyyr Plugin', 'plyyr'); ?></h1>
     <h2 class="nav-tab-wrapper">
-        <a href="?page=plyyr&tab=start"      class="nav-tab <?php echo $active_tab == 'start' ? 'nav-tab-active' : ''; ?>"><?php _e('Start & Settings', 'plyyr'); ?></a>
+        <a href="?page=plyyr&tab=start"      class="nav-tab <?php echo $active_tab == 'start' ? 'nav-tab-active' : ''; ?>"><?php _e('Start', 'plyyr'); ?></a>
+        <a href="?page=plyyr&tab=settings"      class="nav-tab <?php echo $active_tab == 'settings'      ? 'nav-tab-active' : ''; ?>"><?php _e( 'Settings',   'plyyr' ); ?></a>
         <a href="?page=plyyr&tab=shortcodes" class="nav-tab <?php echo $active_tab == 'shortcodes' ? 'nav-tab-active' : ''; ?>"><?php _e('Shortcodes', 'plyyr'); ?></a>
         <a href="?page=plyyr&tab=feedback"   class="nav-tab <?php echo $active_tab == 'feedback' ? 'nav-tab-active' : ''; ?>"><?php _e('Feedback', 'plyyr'); ?></a>
     </h2>
@@ -10,6 +11,14 @@
     <?php if ($active_tab == 'start'): ?>
 
       <div class="plyyr_start">
+
+
+      </div>
+
+      
+    <?php elseif ($active_tab == 'settings'): ?>
+
+      <div class="plyyr_settings">
 
           <form method="post" action="options.php"> 
               <?php @settings_fields('plyyr-group'); ?>
@@ -21,15 +30,6 @@
           </form>
 
       </div>
-
-      <!--div class="plyyr_start">
-          <h3></h3>
-          <ol class="circles-list">
-              <li><p></p></li>
-              <li><p></p></li>
-              <li><p></p></li>
-          </ol>
-      </div-->
 
     <?php elseif ($active_tab == 'shortcodes'): ?>
 
@@ -63,9 +63,9 @@
 
       <div class="plyyr_feedback">
 
-          <h3><?php _e('We Are Listening', 'plyyr'); ?></h3>
+          <h3><?php _e('We Love Feedback', 'plyyr'); ?></h3>
 
-          <p><?php _e('We’d love to know about your experiences with our WordPress plugin and beyond. Drop us a line using the form below', 'plyyr'); ?></p>
+          <p><?php _e('We\'d love to know about your experiences with our WordPress plugin and our platform. Drop us a line using the form below', 'plyyr'); ?></p>
           <p><br><p>
 
               <?php if ($feedback == 'true'): ?>
