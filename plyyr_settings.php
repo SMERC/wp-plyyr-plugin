@@ -44,9 +44,7 @@ if (!class_exists('Plyyr_Settings')) {
      */
     public function settings_portal_code($args)
     {
-      $help = 'Any revenue you generate with your posts is going to be associated to this code. '
-              . 'You can get it from <a href="http://plyyr.com/publishers" target="_blank">http://plyyr.com/publishers</a><br>'
-              . 'By registering a portal code you can customize your widgets and get benefits from the plyyr platform. This code is optional.';
+      $help = '';
       // Get the field name from the $args array
       $field = $args['field'];
       
