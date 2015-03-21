@@ -9,7 +9,9 @@ if (!class_exists('Plyyr_Shortcodes')) {
     {
       // register shortcodes
       add_shortcode('gcn', array(&$this, 'create_gcn_embed_code'));
+      add_shortcode('plyyr-item', array(&$this, 'create_gcn_embed_code'));
       add_shortcode('plyyr', array(&$this, 'create_plyyr_embed_code'));
+      add_shortcode('plyyr-section', array(&$this, 'create_plyyr_embed_code'));
     }
     
     public function getPortalCode()
@@ -65,7 +67,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
 
     /**
      * Allows to embed the plyyr iframe code in wordpress friendly format.
-     * Usage: <code>[plyyr style="width: 300px; height: 2000px; float: left"]</code>
+     * Usage: <code>[plyyr portal="yourportalcode" style="width: 300px; height: 2000px; float: left"]</code>
      * If you are not sure about the style don't include the parameter.
      */
     public function create_plyyr_embed_code($atts, $content = null)

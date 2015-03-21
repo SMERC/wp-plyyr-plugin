@@ -4,10 +4,10 @@
   Plugin Name: Plyyr quiz post generator
   Description: Captures requests that contain the plyyr parameter and generates a new post with the correspondent quiz embedded on it. Example: http://your-site.com?plyyr=quiz-54d507967664c-how-does-golf-work generates a post with the quiz "How does golf work?" embedded on it. If no quiz is found the user is redirected to your 404 page. Use it on combination with the plyyr iframe and generate instant content for your site.
   Version: 0.6
-  Author: Lucia Figueroa
+  Author: Game Cloud, inc.
  */
 
-/*  Copyright 2015 Lucia Figueroa <lucia.ftasca@gmail.com>
+/*  Copyright 2015 GameCloud, Inc <mail@gamecloudnetwork.com>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,6 +29,34 @@ if (!class_exists('Plyyr')) {
   class Plyyr
   {
 
+    protected static $option_name = 'plyyr';
+    protected static $data = array(
+        // General
+        'key' => 'default',
+        // items
+        'info' => '1',
+        'shares' => '1',
+        'comments' => '1',
+        'recommend' => '1',
+        'margin-top' => '0',
+        'embeddedon' => 'content',
+        // Recommendations
+        'active' => 'false',
+        'show' => 'footer',
+        'view' => 'large_images',
+        'items' => '3',
+        'links' => 'https://www.plyyr.com',
+        'section-page' => '',
+        // Tags
+        'tags-mix' => '1',
+        'tags-fun' => '',
+        'tags-pop' => '',
+        'tags-geek' => '',
+        'tags-sports' => '',
+        'tags-news' => '',
+        'more-tags' => '',
+    );
+
     /**
      * Construct the plugin object
      */
@@ -41,14 +69,26 @@ if (!class_exists('Plyyr')) {
       // Register custom post types
       require_once(sprintf("%s/post-types/plyyr_template.php", dirname(__FILE__)));
       $Plyyr_Template = new Plyyr_Template();
-      
+
       // Register shortcodes
       require_once(sprintf("%s/shortcodes/plyyr_shortcodes.php", dirname(__FILE__)));
       $Plyyr_Shortcodes = new Plyyr_Shortcodes();
 
       $plugin = plugin_basename(__FILE__);
       add_filter("plugin_action_links_$plugin", array($this, 'plugin_settings_link'));
+
+      // Admin sub-menu    
+      add_action('admin_menu', array($this, 'submenu_settings'));
     }
+
+    /**
+     * Add settings link on the plyyr's custom type
+     */
+    public function submenu_settings()
+    {
+      add_submenu_page('edit.php?post_type=plyyr', 'plyyr', 'Settings', 'activate_plugins', basename(__FILE__), 'plyyr_redirect_to_settings');
+    }
+    
 
     /**
      * Activate the plugin
@@ -75,6 +115,7 @@ if (!class_exists('Plyyr')) {
       array_unshift($links, $settings_link);
       return $links;
     }
+
   }
 
 }
@@ -86,4 +127,11 @@ if (class_exists('Plyyr')) {
 
   // instantiate the plugin class
   $wp_plugin_template = new Plyyr();
+}
+
+function plyyr_redirect_to_settings()
+{
+  require_once(sprintf("%s/plyyr_settings.php", dirname(__FILE__)));
+  $Plyyr_Settings = new Plyyr_Settings();
+  $Plyyr_Settings->plugin_settings_page();
 }
