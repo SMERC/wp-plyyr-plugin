@@ -11,8 +11,23 @@ if (!class_exists('Plyyr_Settings')) {
     public function __construct()
     {
       // register actions
+
       add_action('admin_init', array(&$this, 'admin_init'));
+      add_action('admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
       add_action('admin_menu', array(&$this, 'add_menu'));
+
+
+    }
+
+ /**
+     * hook into WP's admin_scripts action hook
+     */
+    public function admin_scripts()
+    {
+      // register your plugin's css
+       wp_register_style( 'plyyr-admin',     plugins_url( 'css/admin.css',     __FILE__ ), false, '0.1.0' );
+       wp_enqueue_style(  'plyyr-admin' );
+       wp_enqueue_script( 'plyyr-admin' );
     }
 
     /**
@@ -33,7 +48,7 @@ if (!class_exists('Plyyr_Settings')) {
     {
       // add your setting's fields
       add_settings_field(
-              'plyyr_setting_portal', 'Portal code', array(&$this, 'settings_portal_code'), 'plyyr', 'plyyr-section', array(
+              'plyyr_setting_portal', 'Portal Code', array(&$this, 'settings_portal_code'), 'plyyr', 'plyyr-section', array(
           'field' => 'plyyr_setting_portal'
               )
       );
