@@ -89,8 +89,9 @@ For more information, please feel free to [contact us](https://www.gamecloudnetw
 == Screenshots ==
 1. Embedded Plyyr section
 2. Embedded Plyyr Quiz
-3. Easily Sign Up and the Plyyr Registration Screen and get your Plyyr Code
-4. Plyyr Embed Code Pop Up
+3. Easily Sign Up and get your Plyyr Code
+4. One step configuration in the PLyyr plugin
+5. Plyyr Embed Code Pop Up
 6. Cut and Paste to Embed a Plyyr Short Code
 
 == Changelog ==
