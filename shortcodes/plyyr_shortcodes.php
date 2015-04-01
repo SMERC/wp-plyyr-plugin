@@ -24,8 +24,8 @@ if (!class_exists('Plyyr_Shortcodes')) {
     }
 
     /**
-     * Allows to embed gcn script code in wordpress friendly format.
-     * Usage: <code>[gcn quiz="trivia_quiz_54cbcf1246a10"]</code>
+     * Allows to embed a plyyr item script code in wordpress friendly format.
+     * Usage: <code>[plyyr-item quiz="trivia_quiz_54cbcf1246a10"]</code>
      */
     public function create_gcn_embed_code($atts, $content = null)
     {
@@ -33,18 +33,19 @@ if (!class_exists('Plyyr_Shortcodes')) {
           'quiz' => '',
           'portal' => '',
                       ), $atts));
+      
+      $portal = $this->getPortalCode();
       $error = "
 		<div style='border: 20px solid red; border-radius: 40px; padding: 40px; margin: 50px 0 70px;'>
 			<h3>Ooops!</h3>
-			<p style='margin: 0;'>Something is wrong with your Gcn shortcode. You need to specify a quiz id and a portal code ({BRANCH}).</p>
+			<p style='margin: 0;'>Something is wrong with your plyyr-item shortcode. You need to specify a quiz id
+            and check that your portal code \"$portal\" is enabled on plyyr. You can always remove it from the 
+              <a href=\"/wp-admin/options-general.php?page=plyyr\">settings</a>. ({BRANCH}).</p>
 		</div>";
 
       if (!$quiz) {
         return str_replace('{BRANCH}', '1', $error);
       } else {
-        //Do we have a portal code?
-        $portal = $this->getPortalCode();
-
         $response = file_get_contents("https://games.gamecloudnetwork.com/game/basic/$quiz?portal=$portal&plugin=wordpress");
         if ($response) {
           $content = json_decode($response, true);
@@ -59,7 +60,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
         }
 
         $powered_link = '<a target="_blank" href="' . $content['plyyr_link'] . '">Powered by Plyyr.com</a><br>';
-        $hook = $content["embed_code"] . $powered_link;
+        $hook = '<h2>' . $content['description'] . '</h2><br>' . $content['embed_code'] . '<br>' . $powered_link;
 
         return $hook;
       }

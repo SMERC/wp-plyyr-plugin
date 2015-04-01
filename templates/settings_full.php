@@ -24,7 +24,7 @@
     <h1><?php _e('Plyyr Plugin Settings Guide', 'plyyr'); ?></h1>
     <h2 class="nav-tab-wrapper">
         <a href="options-general.php?page=<?php echo $this->get_option_name(); ?>&tab=start"      class="nav-tab <?php echo $active_tab == 'start' ? 'nav-tab-active' : ''; ?>"><?php _e('Getting Started', 'plyyr'); ?></a>
-        <a href="?page=<?php echo $this->get_option_name(); ?>&tab=embed"      class="nav-tab <?php echo $active_tab == 'embed' ? 'nav-tab-active' : ''; ?>"><?php _e('Site Settings', 'plyyr'); ?></a>
+        <a href="options-general.php?page=<?php echo $this->get_option_name(); ?>&tab=embed"      class="nav-tab <?php echo $active_tab == 'embed' ? 'nav-tab-active' : ''; ?>"><?php _e('Site Settings', 'plyyr'); ?></a>
         <a href="options-general.php?page=<?php echo $this->get_option_name(); ?>&tab=shortcodes" class="nav-tab <?php echo $active_tab == 'shortcodes' ? 'nav-tab-active' : ''; ?>"><?php _e('Shortcodes', 'plyyr'); ?></a>
         <a href="options-general.php?page=<?php echo $this->get_option_name(); ?>&tab=feedback"   class="nav-tab <?php echo $active_tab == 'feedback' ? 'nav-tab-active' : ''; ?>"><?php _e('Feedback', 'plyyr'); ?></a>
     </h2>
@@ -46,7 +46,7 @@
                   <p><?php _e('Enter your blog URL.', 'plyyr'); ?></p>
               </li>
               <li>
-                  <p><?php _e('Enter tags to filter the type of quizzes you want add to your site.<i> Entertainment, Moms, Fun, Sports, News, etc.</i>', 'plyyr'); ?></p>
+                  <p><?php _e('Enter tags to filter the type of quizzes you want to add to your site.<i> Entertainment, Moms, Fun, Sports, News, etc.</i>', 'plyyr'); ?></p>
               </li>
               <li>
                   <p><?php _e('Submit', 'plyyr'); ?></p>
@@ -55,7 +55,7 @@
                   <p><?php _e('Copy the "Portal Code" provided at Plyyr.com into the Field above and save.', 'plyyr'); ?></p>
               </li>
               <li>
-                  <p><?php _e('You are ready to go. Emsbed a Short Code on a page.', 'plyyr'); ?></p>
+                  <p><?php _e('You are ready to go. Embed a Short Code on a page.', 'plyyr'); ?></p>
               </li>
           </ol>
 
