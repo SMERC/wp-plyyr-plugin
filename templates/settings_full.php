@@ -157,12 +157,6 @@
                          <p><?php _e('This is the URL for your website. http://yourwebsite.com', 'plyyr'); ?></p>
                          <p><?php _e('Type: URL', 'plyyr'); ?></p>
                     </dd>
-                    <dt>Publishing Group</dt>
-                        <dd>
-                         <p><?php _e('If you are part of a partner publishing group please select it. Otherwise leave this set to "Plyyr".', 'plyyr'); ?></p>
-                         <p><?php _e('Type: Dropdown Text', 'plyyr'); ?></p>
-                    </dd>
-
                     <dt>Tags</dt>
                         <dd>
                          <p><?php _e('Select the categories of content you want automatically filtered into the Plyyr widget embedded on your site. Examples:<i> News, Entertainment, Sports, Movies, Fun.</i>', 'plyyr'); ?></p>

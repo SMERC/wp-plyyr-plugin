@@ -59,7 +59,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
           return str_replace('{BRANCH}', '3', $error);
         }
 
-        $powered_link = '<a target="_blank" href="' . $content['plyyr_link'] . '">Powered by Plyyr.com</a><br>';
+        $powered_link = '<span class="meta-nav"><a target="_blank" href="' . $content['plyyr_link'] . '">powered by <img src="'.plugins_url( 'img/logo_micro_partners.png', __FILE__ ).'"></a><br></span>';
         $hook = '<h2>' . $content['description'] . '</h2><br>' . $content['embed_code'] . '<br>' . $powered_link;
 
         return $hook;
@@ -85,6 +85,13 @@ if (!class_exists('Plyyr_Shortcodes')) {
         $portal = 'plyyr';
 
       } else {
+
+        if($style)
+        {
+            if (strpos($style,'width') == false) {
+                $style += 'width:795px;';
+            }
+        }
 
         $style = !$style ? "width: 795px; height: 2000px; float: left;" : $style;
 

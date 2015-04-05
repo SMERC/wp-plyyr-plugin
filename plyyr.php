@@ -1,7 +1,7 @@
 <?php
 
 /*
-  Plugin Name: Plyyr quiz post generator
+  Plugin Name: Plyyr Quiz Post Generator
   Description: Captures requests that contain the plyyr parameter and generates a new post with the correspondent quiz embedded on it. Example: http://your-site.com?plyyr=quiz-54d507967664c-how-does-golf-work generates a post with the quiz "How does golf work?" embedded on it. If no quiz is found the user is redirected to your 404 page. Use it on combination with the plyyr iframe and generate instant content for your site.
   Version: 0.6
   Author: Game Cloud, inc.

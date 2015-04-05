@@ -28,9 +28,12 @@ get_header(); ?>
             </article>
             <br>
         <?php endwhile ?>
-        <br><br>    
-        <a target="_blank" href="http://plyyr.com">Powered by Plyyr.com</a>    
+        <br><br>
+            <div >
+        Powered by <a target="_blank" href="http://plyyr.com"><img src="<?php echo plugins_url( 'img/admin-embed-items.png', __FILE__ ); ?>" class="location_img"></a>
+
         <br>
+        </div>
       <?php echo $_wrapper_end ?>
         
 <?php wp_reset_query(); ?>
