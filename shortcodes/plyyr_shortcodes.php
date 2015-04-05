@@ -59,7 +59,8 @@ if (!class_exists('Plyyr_Shortcodes')) {
           return str_replace('{BRANCH}', '3', $error);
         }
 
-        $powered_link = '<span class="meta-nav"><a target="_blank" href="' . $content['plyyr_link'] . '">powered by <img src="'.plugins_url( 'img/logo_micro_partners.png', __FILE__ ).'"></a><br></span>';
+        $powered_link = '<span style="font-color:#999999; font-style:italic;font-size: xx-small;text-decoration: none;"><a target="_blank" style=
+        "text-decoration: none" href="' . $content['plyyr_link'] . '">powered by <img src="'.plugins_url( 'img/logo_micro_partners.png', __FILE__ ).'"></a><br></span>';
         $hook = '<h2>' . $content['description'] . '</h2><br>' . $content['embed_code'] . '<br>' . $powered_link;
 
         return $hook;

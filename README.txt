@@ -1,4 +1,4 @@
-=== Plyyr ===
+﻿=== Plyyr ===
 Contributors: Plyyr
 Tags: Plyyr,  social news, feed, feeds, embed, oembed, content, viral, related, syndication, related content, quiz, quizzes, test yourself, list, poll, entertainment, celebs, celebrities, celebrity, animals, moms, news, politics, lifestyle, sports
 Requires at least: 3.7

@@ -30,8 +30,7 @@ get_header(); ?>
         <?php endwhile ?>
         <br><br>
             <div >
-        Powered by <a target="_blank" href="http://plyyr.com"><img src="<?php echo plugins_url( 'img/admin-embed-items.png', __FILE__ ); ?>" class="location_img"></a>
-
+        <span style="font-color:#999999; font-style:italic;font-size: xx-small;text-decoration: none;">Powered by <a target="_blank" style="text-decoration: none" href="http://plyyr.com"><img src="<?php echo plugins_url( 'img/logo_micro_partners.png', __FILE__ ); ?>" class="location_img"></a></span>
         <br>
         </div>
       <?php echo $_wrapper_end ?>
