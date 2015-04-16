@@ -138,7 +138,7 @@ if (!class_exists('Plyyr_Template')) {
       }
 
       $args = array(
-          'post_content' => '<h2>' . $content['description'] . '</h2><br><code>' . $content['wp_shortcode'] . '</code>',
+          'post_content' => $content['wp_shortcode'],
           'post_name' => $content['slug'],
           'post_status' => 'publish',
           'post_title' => $title,
