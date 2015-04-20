@@ -50,6 +50,38 @@ if (!class_exists('Plyyr_Shortcodes')) {
           $this->recommendations = $content;
         }
       }
+
+    return '<div style="display:block;margin-left:1%;width:100%">
+                <span style="text-decoration: none;font-size:medium">You Might Also Like</span>
+            </div>
+            <div style="display:block;margin-left:1%;width:100%">
+                <div class="item-container item-margin-center yellow" style="position: relative;display:inline-block;width:32.5%;background-color:#fff;">
+                    <div class="item" style="padding:1%;">
+                        <a href="/trivia/quiz/55311c4c462d7-the-force-has-awakened-star-wars-quiz">
+                          <img src="http://s3.amazonaws.com/gcn-static-assets/uploaded/assets/game/trivia/quiz/starwars.jpeg" class="img" style="display: inline-block;">
+                          <span style="text-decoration: none;font-size:small" >The Force Has Awakened Star Wars Quiz</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="item-container item-margin-center yellow" style="position:relative; display:inline-block;width:32.5%;background-color:#fff;">
+                      <div class="item" style="padding:1%;">
+                                <a href="/trivia/quiz/55311c4c462d7-the-force-has-awakened-star-wars-quiz">
+                                  <img src="http://s3.amazonaws.com/gcn-static-assets/uploaded/assets/game/trivia/quiz/starwars.jpeg" class="img" style="display: inline-block;">
+                                  <span style="text-decoration: none;font-size:small">The Force Has Awakened Star Wars Quiz</span>
+                                </a>
+                      </div>
+                 </div>
+                 <div class="item-container item-margin-center yellow" style="position:relative; display:inline-block;width:32.5%;background-color:#fff;">
+                                   <div class="item" style="padding:1%;">
+                                             <a href="/trivia/quiz/55311c4c462d7-the-force-has-awakened-star-wars-quiz">
+                                               <img src="http://s3.amazonaws.com/gcn-static-assets/uploaded/assets/game/trivia/quiz/starwars.jpeg" class="img" style="display: inline-block;">
+                                               <span style="text-decoration: none;font-size:small">The Force Has Awakened Star Wars Quiz</span>
+                                             </a>
+                                   </div>
+                 </div>
+             </div>    ';
+
+
     }
 
     public function getPortalCode()
@@ -125,13 +157,13 @@ if (!class_exists('Plyyr_Shortcodes')) {
       $fb_click = $this->getFbShareLink($quiz);
       $tw_click = $this->getTwShareLink($quiz);
       
-      return 
-        '<p style="width:100%">'
-      . '<span style="background-color:blue;color:white;width:50%;cursor:pointer">'
-      . '<a href="#" ' . $fb_click . '>Share on facebook</a>'
+      return
+       '<p style="width:100%;display:block;"><span style="width:100%;display:block;text-align:center">Please share this with a friend who would like it!</span><br>'
+      . '<span id="highlite" style="text-align;center;text-decoration: none;display:inline-block;background-color:#435698;color:white;width: 43%;cursor:pointer;padding-right:2.5%;padding-top:8px;padding-bottom:10px;padding-left:2.5%;margin:1%">'
+      . '<a href="#" ' . $fb_click . '> <img src="' .  plugins_url('img/fb.jpg', __FILE__). '"> <span style="margin-left: 5px;">  Share on Facebook</span></a>'
       . '</span>'
-      . '<span style="background-color:DodgerBlue;color:white;width:50%;cursor:pointer">'
-      . '<a href="#" ' . $tw_click . '>Share on twitter</a>'
+      . '<span id="highlite" style="text-align;center;ttext-decoration: none;display:inline-block;background-color:#3fabec;color:white;width: 43%;cursor:pointer;padding-right:2.5%;padding-top:8px;padding-bottom:10px;padding-left:2.5%;margin:1%">'
+      . '<a href="#" ' . $tw_click . '> <img src="' .  plugins_url('img/tw.jpg', __FILE__). '"> <span style="margin-left: 5px;"> Share on Twitter</span></a>'
       . '</span>'
       . '</p>';
     }
@@ -147,8 +179,13 @@ if (!class_exists('Plyyr_Shortcodes')) {
     }
     
     protected function getTwShareLink($quiz)
-    {    
-      $url = 'http://twitter.com/home?status=' . urlencode($quiz['title']) . ' @_plyyr';
+    {
+          $shareurl = "http://share.plyyr.com/share/portal/{portal_id}/level/{level_key}/referer/{referer}";
+          $shareurl = str_replace('{portal_id}', $this->getPortalCode(), $shareurl);
+          $shareurl = str_replace('{level_key}', $quiz['id'], $shareurl);
+          $shareurl = str_replace('{referer}', $this->customUrlEncode(site_url($_SERVER["REQUEST_URI"])), $shareurl);
+
+      $url = 'http://twitter.com/home?status=' . urlencode($quiz['title']) . ' @_plyyr ' . $shareurl;
       return 'onclick="window.open(\'' . $url . '\', \'Twitter\', \'toolbar=0, status=0, width=560, height=360\');return false"';
     }
     
@@ -159,12 +196,14 @@ if (!class_exists('Plyyr_Shortcodes')) {
     
     protected function addComments($quiz)
     {
-      
+        return '<div style="display:block;margin-left:1%;width:100%">
+                               <span style="text-decoration: none;font-size:medium">Comments</span>
+                </div>';
     }
     
     protected function addRecommendations($quiz)
     {
-      $this->getRecommendations($quiz['id']);
+      return $this->getRecommendations($quiz['id']);
     }
 
     /**
@@ -192,7 +231,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
           }
         }
 
-        $style = !$style ? "width: 795px; height: 2000px; float: left;" : $style;
+        $style = !$style ? "width: 795px; height: 2000px; float: left;margin-left:1%;" : $style;
 
         $hook = '<div class="gcntargets" style="' . $style . '" '
                 . 'gcn-portal="' . $portal . '"></div>'
