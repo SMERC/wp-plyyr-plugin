@@ -37,7 +37,7 @@ if (!class_exists('Plyyr_Settings')) {
     {
       // register your plugin's settings
       register_setting('plyyr-group', 'plyyr_setting_portal');
-
+      
       // add description section
       add_settings_section(
               'plyyr-section', '', array(&$this, 'settings_section_plyyr'), 'plyyr'
