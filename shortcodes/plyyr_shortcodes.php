@@ -164,25 +164,22 @@ if (!class_exists('Plyyr_Shortcodes')) {
     
     protected function addComments($quiz)
     {
-      '<code><script type="text/javascript"> 
+      $current_url = site_url($_SERVER["REQUEST_URI"]);
+      $script = '<code><script type="text/javascript"> 
               if (typeof FB != "object") {
-                var first = document.body.children[0];
-                var beforeEle = document.createElement("div");
-                beforeEle.innerHTML = "<div id="fb-root"></div>";
-                document.body.insertBefore(beforeEle, first);
                 (function(d, s, id) {
-                  var js, fjs = d.getElementsByTagName(s)[0];
-                  if (d.getElementById(id)) return;
-                  js = d.createElement(s); js.id = id;
-                  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.3&appId=1557934751108261";
-                  fjs.parentNode.insertBefore(js, fjs);
-                }(document, "script", "facebook-jssdk"));
+                    if (d.getElementById(id)) return;
+                    script = d.createElement("script");
+                    script.type = "text/javascript";
+                    script.async = true;
+                    script.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.3&appId=1557934751108261";
+                    d.getElementsByTagName("head")[0].appendChild(script);
+                }(document, "head", "facebook-jssdk"));
               }
-              </script></code>
-              <div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-numposts="5" data-colorscheme="light"></div>' ;     
+              </script></code>';     
  
-        return '<div style="display:block;margin-left:1%;width:100%">
-                               <span style="text-decoration: none;font-size:medium">Comments</span>
+        return $script . '<div style="display:block;margin-left:1%;width:100%">
+                  <div class="fb-comments" data-href="' . $current_url . '" data-numposts="5" data-colorscheme="light"></div>
                 </div>';
     }
     
