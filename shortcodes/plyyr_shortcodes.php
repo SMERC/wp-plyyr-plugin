@@ -127,11 +127,11 @@ if (!class_exists('Plyyr_Shortcodes')) {
       
       return
        '<p style="width:100%;display:block;"><span style="width:100%;display:block;text-align:center">Please share this with a friend who would like it!</span><br>'
-      . '<span id="highlite" style="text-align;center;text-decoration: none;display:inline-block;background-color:#435698;color:white;width: 43%;cursor:pointer;padding-right:2.5%;padding-top:8px;padding-bottom:10px;padding-left:2.5%;margin:1%">'
-      . '<a href="#" ' . $fb_click . '> <img src="' .  plugins_url('img/fb.jpg', __FILE__). '"> <span style="margin-left: 5px;">  Share on Facebook</span></a>'
+      . '<span style="text-align;center;text-decoration: none;display:inline-block;background-color:#435698;color:white;width: 43%;cursor:pointer;padding-right:2.5%;padding-top:8px;padding-bottom:10px;padding-left:2.5%;margin:1%">'
+      . '<a class="plyyr" href="#" ' . $fb_click . '> <img src="' .  plugins_url('img/fb.jpg', __FILE__). '"> <span style="margin-left: 5px;" >  Share on Facebook</span></a>'
       . '</span>'
-      . '<span id="highlite" style="text-align;center;ttext-decoration: none;display:inline-block;background-color:#3fabec;color:white;width: 43%;cursor:pointer;padding-right:2.5%;padding-top:8px;padding-bottom:10px;padding-left:2.5%;margin:1%">'
-      . '<a href="#" ' . $tw_click . '> <img src="' .  plugins_url('img/tw.jpg', __FILE__). '"> <span style="margin-left: 5px;"> Share on Twitter</span></a>'
+      . '<span  style="text-align;center;ttext-decoration: none;display:inline-block;background-color:#3fabec;color:white;width: 43%;cursor:pointer;padding-right:2.5%;padding-top:8px;padding-bottom:10px;padding-left:2.5%;margin:1%">'
+      . '<a class="plyyr" href="#" ' . $tw_click . '> <img src="' .  plugins_url('img/tw.jpg', __FILE__). '"> <span style="margin-left: 5px;"> Share on Twitter</span></a>'
       . '</span>'
       . '</p>';
     }
@@ -179,6 +179,8 @@ if (!class_exists('Plyyr_Shortcodes')) {
               </script></code>';     
  
         return $script . '<div style="display:block;margin-left:1%;width:100%">
+                                          <span style="text-decoration: none;font-size:medium">Comments</span>
+                                      </div><div style="display:block;margin-left:1%;width:100%">
                   <div class="fb-comments" data-href="' . $current_url . '" data-numposts="5" data-colorscheme="light"></div>
                 </div>';
     }
@@ -191,19 +193,23 @@ if (!class_exists('Plyyr_Shortcodes')) {
       $html = '<div style="display:block;margin-left:1%;width:100%">
                 <span style="text-decoration: none;font-size:medium">You Might Also Like</span>
             </div>
-            <div style="display:block;margin-left:1%;width:100%">';
+            <div style="display:block;margin-left:1%;width:100%; top:0%;vertical-align:text-top">';
       
-      $block .= '<div class="item-container item-margin-center yellow" style="position: relative;display:inline-block;width:32.5%;background-color:#fff;">
+      $block .= '<div class="item-container" style="position: relative;display:inline-block;width:32.5%;background-color:#fff;vertical-align:text-top;">
                     <div class="item" style="padding:1%;">
-                        <a href="/?plyyr={level_slug}">
+                        <a class="plyyrgrey" href="/?plyyr={level_slug}">
                           <img src="{level_picture}" class="img" style="display: inline-block;">
-                          <span style="text-decoration: none;font-size:small" >{level_title}</span>
+                          <span class="plyyr" style="text-decoration: none;font-size:small;" >{level_title}</span>
                         </a>
                     </div>
                 </div>';
-      
+
+      $bob = 0;
       foreach ($this->recommendations as $r) {
-        $html .= str_replace(array('{level_slug}', '{level_picture}', '{level_title}'), array($r['slug'], $r['picture'], $r['title']), $block);
+        if ($bob < 3){
+            $html .= str_replace(array('{level_slug}', '{level_picture}', '{level_title}'), array($r['slug'], $r['picture'], $r['title']), $block);
+        }
+        $bob++;
       }
       
       $html .= '</div>';
