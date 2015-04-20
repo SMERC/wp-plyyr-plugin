@@ -76,10 +76,7 @@ if (!class_exists('Plyyr')) {
 
       $plugin = plugin_basename(__FILE__);
       add_filter("plugin_action_links_$plugin", array($this, 'plugin_settings_link'));
-      
-      //Custom styles
-      wp_enqueue_style('plyyr', plugins_url('css/plyyr.css', __FILE__ ));
-      
+                  
       // Admin sub-menu    
       add_action('admin_menu', array($this, 'submenu_settings'));
     }

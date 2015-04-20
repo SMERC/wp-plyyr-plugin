@@ -63,6 +63,8 @@ if (!class_exists('Plyyr_Template')) {
               )
       );
       register_taxonomy(self::POST_TYPE, self::POST_TYPE, array('rewrite' => false));
+      //Custom styles
+      wp_enqueue_style('plyyr', plugins_url('css/plyyr.css', __FILE__ ));
       flush_rewrite_rules();
     }
 

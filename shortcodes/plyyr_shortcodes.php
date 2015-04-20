@@ -187,6 +187,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
     {
       $this->getRecommendations($quiz['id']);
       
+      $block = '';
       $html = '<div style="display:block;margin-left:1%;width:100%">
                 <span style="text-decoration: none;font-size:medium">You Might Also Like</span>
             </div>
