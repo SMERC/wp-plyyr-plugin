@@ -50,38 +50,6 @@ if (!class_exists('Plyyr_Shortcodes')) {
           $this->recommendations = $content;
         }
       }
-
-    return '<div style="display:block;margin-left:1%;width:100%">
-                <span style="text-decoration: none;font-size:medium">You Might Also Like</span>
-            </div>
-            <div style="display:block;margin-left:1%;width:100%">
-                <div class="item-container item-margin-center yellow" style="position: relative;display:inline-block;width:32.5%;background-color:#fff;">
-                    <div class="item" style="padding:1%;">
-                        <a href="/trivia/quiz/55311c4c462d7-the-force-has-awakened-star-wars-quiz">
-                          <img src="http://s3.amazonaws.com/gcn-static-assets/uploaded/assets/game/trivia/quiz/starwars.jpeg" class="img" style="display: inline-block;">
-                          <span style="text-decoration: none;font-size:small" >The Force Has Awakened Star Wars Quiz</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="item-container item-margin-center yellow" style="position:relative; display:inline-block;width:32.5%;background-color:#fff;">
-                      <div class="item" style="padding:1%;">
-                                <a href="/trivia/quiz/55311c4c462d7-the-force-has-awakened-star-wars-quiz">
-                                  <img src="http://s3.amazonaws.com/gcn-static-assets/uploaded/assets/game/trivia/quiz/starwars.jpeg" class="img" style="display: inline-block;">
-                                  <span style="text-decoration: none;font-size:small">The Force Has Awakened Star Wars Quiz</span>
-                                </a>
-                      </div>
-                 </div>
-                 <div class="item-container item-margin-center yellow" style="position:relative; display:inline-block;width:32.5%;background-color:#fff;">
-                                   <div class="item" style="padding:1%;">
-                                             <a href="/trivia/quiz/55311c4c462d7-the-force-has-awakened-star-wars-quiz">
-                                               <img src="http://s3.amazonaws.com/gcn-static-assets/uploaded/assets/game/trivia/quiz/starwars.jpeg" class="img" style="display: inline-block;">
-                                               <span style="text-decoration: none;font-size:small">The Force Has Awakened Star Wars Quiz</span>
-                                             </a>
-                                   </div>
-                 </div>
-             </div>    ';
-
-
     }
 
     public function getPortalCode()
@@ -196,6 +164,23 @@ if (!class_exists('Plyyr_Shortcodes')) {
     
     protected function addComments($quiz)
     {
+      '<code><script type="text/javascript"> 
+              if (typeof FB != "object") {
+                var first = document.body.children[0];
+                var beforeEle = document.createElement("div");
+                beforeEle.innerHTML = "<div id="fb-root"></div>";
+                document.body.insertBefore(beforeEle, first);
+                (function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.3&appId=1557934751108261";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, "script", "facebook-jssdk"));
+              }
+              </script></code>
+              <div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-numposts="5" data-colorscheme="light"></div>' ;     
+ 
         return '<div style="display:block;margin-left:1%;width:100%">
                                <span style="text-decoration: none;font-size:medium">Comments</span>
                 </div>';
@@ -203,7 +188,28 @@ if (!class_exists('Plyyr_Shortcodes')) {
     
     protected function addRecommendations($quiz)
     {
-      return $this->getRecommendations($quiz['id']);
+      $this->getRecommendations($quiz['id']);
+      
+      $html = '<div style="display:block;margin-left:1%;width:100%">
+                <span style="text-decoration: none;font-size:medium">You Might Also Like</span>
+            </div>
+            <div style="display:block;margin-left:1%;width:100%">';
+      
+      $block .= '<div class="item-container item-margin-center yellow" style="position: relative;display:inline-block;width:32.5%;background-color:#fff;">
+                    <div class="item" style="padding:1%;">
+                        <a href="/?plyyr={level_slug}">
+                          <img src="{level_picture}" class="img" style="display: inline-block;">
+                          <span style="text-decoration: none;font-size:small" >{level_title}</span>
+                        </a>
+                    </div>
+                </div>';
+      
+      foreach ($this->recommendations as $r) {
+        $html .= str_replace(array('{level_slug}', '{level_picture}', '{level_title}'), array($r['slug'], $r['picture'], $r['title']), $block);
+      }
+      
+      $html .= '</div>';
+      return $html;
     }
 
     /**
