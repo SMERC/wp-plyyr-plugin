@@ -7,7 +7,6 @@ get_header(); ?>
         <?php while ($loop->have_posts() ) : $loop->the_post(); ?> 
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <header class="entry-header">
-
                     <!-- Display Title and Author Name -->
                     <h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
                     <br />

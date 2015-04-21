@@ -97,7 +97,7 @@ if (!class_exists('Plyyr_Shortcodes')) {
           return str_replace('{BRANCH}', '3', $error);
         }
 
-        $powered_link = '<span style="font-color:#999999; font-style:italic;font-size: xx-small;text-decoration: none;">
+        $powered_link = '<span class="poweredbyplyr" style="font-color:#999999; font-style:italic;font-size: xx-small;text-decoration: none;">
           <a target="_blank" style="text-decoration: none" href="' . $content['plyyr_link'] . '">powered by <img src="' . 
                 plugins_url('img/logo_micro_partners.png', __FILE__) . '"></a><br></span>';
         $hook = '<h2>' . $content['description'] . '</h2><br>' . $content['embed_code'] . '<br>';
@@ -180,10 +180,13 @@ if (!class_exists('Plyyr_Shortcodes')) {
  
         return $script . '<div style="display:block;margin-left:1%;width:100%">
                                           <span style="text-decoration: none;font-size:medium">Comments</span>
-                                      </div><div style="display:block;margin-left:1%;width:100%">
-                  <div class="fb-comments" data-href="' . $current_url . '" data-numposts="5" data-colorscheme="light"></div>
-                </div>';
-    }
+                                      </div><div class="plyyr" style="display:block;margin-left:1%;width:98%">
+                  <div class="fb-comments fb_iframe_widget fb_iframe_widget_fluid" data-href="' . $current_url . '" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
+                </div>
+
+                ';
+
+  }
     
     protected function addRecommendations($quiz)
     {
