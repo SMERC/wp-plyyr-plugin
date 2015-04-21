@@ -1,7 +1,7 @@
 <?php
 
 /*
-  Plugin Name: Plyyr Post Generator
+  Plugin Name: Plyyr Social Post Generator
   Description: Plugin for embedding customized social quizzes, polls and other content from Plyyr in your WordPress site. Captures requests that contain the plyyr shortcodes and generates a new post with the corresponding quiz and other content embedded on it. Customize your settings at http://plyyr.com . Use it to generate instant content for your site.
   Version: 0.1
   Author: Game Cloud, inc.
