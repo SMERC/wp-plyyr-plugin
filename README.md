@@ -5,6 +5,8 @@ Tags: Plyyr,  social news, feed, feeds, embed, oembed, content, viral, related, 
 Requires at least: 3.7
 Tested up to: 4.1.1
 Stable tag: 0.1.0
+License: GPLv2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Plyyr lets you embed customized Plyyr Content such as quizzes and polls automatically!
 
