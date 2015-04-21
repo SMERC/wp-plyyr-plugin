@@ -63,6 +63,8 @@ if (!class_exists('Plyyr_Template')) {
               )
       );
       register_taxonomy(self::POST_TYPE, self::POST_TYPE, array('rewrite' => false));
+      //Custom styles
+      wp_enqueue_style('plyyr', plugins_url('css/plyyr.css', __FILE__ ));
       flush_rewrite_rules();
     }
 
@@ -151,7 +153,7 @@ if (!class_exists('Plyyr_Template')) {
       add_post_meta($id, 'plyyr_image', $content['picture']);
       add_post_meta($id, 'plyyr_description', $content['description']);
       $tags = $this->register_tags($id, $content['tags']);
-      $tags_html = get_the_term_list($id, self::POST_TYPE, 'More games that contain: ', ', ');
+      $tags_html =  get_the_term_list($id, self::POST_TYPE, 'More games that contain: ', ', ');
       //$terms = wp_get_post_terms($id, self::POST_TYPE);
       //var_export($tags_html);exit;
       $args['post_content'] = $args['post_content'] . $tags_html;
