@@ -1,9 +1,9 @@
 <?php
 
 /*
-  Plugin Name: Plyyr Quiz Post Generator
-  Description: Captures requests that contain the plyyr parameter and generates a new post with the correspondent quiz embedded on it. Example: http://your-site.com?plyyr=quiz-54d507967664c-how-does-golf-work generates a post with the quiz "How does golf work?" embedded on it. If no quiz is found the user is redirected to your 404 page. Use it on combination with the plyyr iframe and generate instant content for your site.
-  Version: 0.6
+  Plugin Name: Plyyr Social Quiz Post Generator
+  Description: Description: Plugin for embedding customized social quizzes, polls and other content from Plyyr in your WordPress site. Captures requests that contain the plyyr shortcodes and generates a new post with the corresponding quiz and other content embedded on it.  Customize your settings at http://plyyr.com . Use it to generate instant content for your site.
+  Version: 0.1
   Author: Game Cloud, inc.
  */
 
